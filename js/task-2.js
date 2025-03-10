@@ -27,13 +27,21 @@ const images = [
 
 const listImages = document.querySelector(".gallery");
 
-function imagesGenerator(images) {
-  return images.map((img) => {
-    listImages.insertAdjacentHTML("afterbegin", "<li><img /></li>");
-    const imageElem = document.querySelector("img");
-    imageElem.src = img.url;
-    imageElem.alt = img.alt;
-  });
-}
+listImages.insertAdjacentHTML(
+  "beforeend",
+  images
+    .map(({ url, alt }) => `<li><img src="${url}" alt="${alt}"></li>`)
+    .join("")
+);
 
-imagesGenerator(images);
+// function imagesGenerator(images) {
+//   return images.map((img) => {
+//     listImages.insertAdjacentHTML("afterbegin", "<li><img /></li>");
+//     const imageElem = document.querySelector("img");
+//     imageElem.src = img.url;
+//     imageElem.alt = img.alt;
+//     console.log(imageElem);
+//   });
+// }
+
+// imagesGenerator(images);

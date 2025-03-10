@@ -12,24 +12,25 @@ const mainBox = document.querySelector("#boxes");
 inputNumber.addEventListener("input", checkInputValue);
 
 function checkInputValue(event) {
-  if (event.target.value > 100) {
-    event.target.value = 100;
-  }
+  let value = Number(event.target.value);
+  event.target.value = Math.min(Math.max(value, 1), 100);
 }
 
 createButton.addEventListener("click", () => {
   const amount = Number(inputNumber.value);
-  if (amount <= 100) {
+  if (amount >= 1 && amount <= 100) {
     createElements(amount);
   }
 });
 
 function createElements(inputValue) {
-  mainBox.innerHTML = "";
+  mainBox.innerHTML = ""; // Очищення перед додаванням нових елементів
   createBoxes(inputValue);
 }
 
 function createBoxes(amount) {
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < amount; i++) {
     const newCard = document.createElement("div");
     newCard.classList.add("new-cards");
@@ -37,8 +38,10 @@ function createBoxes(amount) {
     newCard.style.height = `${30 + i * 10}px`;
     newCard.style.backgroundColor = getRandomHexColor();
     newCard.style.margin = "5px";
-    mainBox.append(newCard);
+    fragment.appendChild(newCard);
   }
+
+  mainBox.appendChild(fragment); // Додаємо всі елементи за одну операцію
 }
 
 destroyButton.addEventListener("click", destroyElements);
